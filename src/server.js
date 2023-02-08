@@ -10,20 +10,24 @@ import {
   notFoundErrorHandler,
   unauthorizedErrorHandler,
 } from "./errorHandlers.js";
+import usersRouter from "./api/users/index.js";
+import reviewsRouter from "./api/reviews/index.js";
 
 const server = express();
 const port = process.env.PORT || 3001;
 
-//****************************** MIDDLEWARES ************************************* */
+//****************************************** MIDDLEWARES ************************************* */
 
 server.use(cors());
 server.use(express.json());
 
-//***************************  ENDPOINTS *********************************** */
+//********************************************  ENDPOINTS *********************************** */
 
 server.use("/products", productsRouter);
+server.use("/users", usersRouter);
+server.use("/reviews", reviewsRouter);
 
-//************************ ERROR HANDLERS ************************************* */
+//****************************************** ERROR HANDLERS ************************************* */
 
 server.use(badRequestErrorHandler);
 server.use(notFoundErrorHandler);
