@@ -3,6 +3,13 @@ import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 import { pgConnect, syncModels } from "./db.js";
 import productsRouter from "./api/products/index.js";
+import {
+  badRequestErrorHandler,
+  forbiddenErrorHandler,
+  genericErrorHandler,
+  notFoundErrorHandler,
+  unauthorizedErrorHandler,
+} from "./errorHandlers.js";
 
 const server = express();
 const port = process.env.PORT || 3001;
@@ -17,6 +24,12 @@ server.use(express.json());
 server.use("/products", productsRouter);
 
 //************************ ERROR HANDLERS ************************************* */
+
+server.use(badRequestErrorHandler);
+server.use(notFoundErrorHandler);
+server.use(unauthorizedErrorHandler);
+server.use(forbiddenErrorHandler);
+server.use(genericErrorHandler);
 
 await pgConnect();
 await syncModels();
